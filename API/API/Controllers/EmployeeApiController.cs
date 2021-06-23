@@ -18,5 +18,10 @@ namespace API.Controllers
 
             return Ok(result);
         }
+        public IHttpActionResult Create(EmployeeInfo employeeInfo)
+        {
+            var createEmp = db.Sp_CrudEmp(0, employeeInfo.EmpName, employeeInfo.Email, employeeInfo.Location, employeeInfo.Salary, "Insert");
+            return Ok(createEmp);
+        }
     }
 }

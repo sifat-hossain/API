@@ -28,5 +28,25 @@ namespace API.Controllers
             }
             return View(employeeInfos);
         }
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create(EmployeeInfo employeeInfo)
+        {
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri("http://localhost:58848/api/EmployeeApi");
+            var createcreateEmp = httpClient.PostAsJsonAsync<EmployeeInfo>("EmployeeApi", employeeInfo);
+            createcreateEmp.Wait();
+
+            var saveData = createcreateEmp.Result;
+            if(saveData.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+            return View("Create");
+        }
     }
 }
