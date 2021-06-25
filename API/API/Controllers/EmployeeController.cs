@@ -48,5 +48,22 @@ namespace API.Controllers
             }
             return View("Create");
         }
+
+        public ActionResult Details(int id)
+        {
+            EmployeeInfo employeeInfo = null;
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri("http://localhost:58848/api/");
+            var details = httpClient.GetAsync("EmployeeApi?id=" +id.ToString());
+            details.Wait();
+            var readData = details.Result;
+            if(readData.IsSuccessStatusCode)
+            {
+                var displayData = readData.Content.ReadAsAsync<EmployeeInfo>();
+                displayData.Wait();
+                employeeInfo = displayData.Result;
+            }
+            return View (employeeInfo);
+        }
     }
 }
