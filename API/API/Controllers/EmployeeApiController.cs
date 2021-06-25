@@ -32,5 +32,12 @@ namespace API.Controllers
             var details = db.Sp_CrudEmp(id, "", "", "", 0, "GetEmp").FirstOrDefault();
             return Ok(details);
         }
+
+        [HttpPut]
+        public IHttpActionResult Put(EmployeeInfo employeeInfo)
+        {
+            var edit = db.Sp_CrudEmp(employeeInfo.EmpId, employeeInfo.EmpName, employeeInfo.Email, employeeInfo.Location, employeeInfo.Salary, "Update").FirstOrDefault();
+            return Ok(edit);
+        }
     }
 }
